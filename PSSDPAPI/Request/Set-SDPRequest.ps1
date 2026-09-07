@@ -71,6 +71,7 @@ Function Set-SDPRequest
 			Method = "PUT"
 			EntityUri = "/api/v3/requests/$RequestId"
 			InputData = $InputData
+			ContentType = "application/x-www-form-urlencoded"
 		}
 
 		#Send request

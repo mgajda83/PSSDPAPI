@@ -32,7 +32,11 @@ Function Set-SDPApiConnection
     {
 		if($IgnoreSSL)
 		{
-			Add-Type @"
+			if($Host.Version -gt [Version]"7.2")
+			{
+				Set-Variable -Name SkipCertificateCheck -Value $true -Scope global
+			} else {
+				Add-Type @"
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 public class TrustAllCertsPolicy : ICertificatePolicy {
@@ -43,8 +47,9 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     }
 }
 "@
-			[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-			[System.Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+				[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+				[System.Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+			}
 		}
     }
 

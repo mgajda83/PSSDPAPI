@@ -44,7 +44,9 @@ Function Invoke-SDPAPIEntity
 		$InputData,
 		[Parameter()]
 		[ValidateScript({$_ -is [int] -and $_ -gt 0})]
-		$Limit = 100
+		$Limit = 100,
+		[Parameter()]
+		[Switch]$SkipCertificateCheck
 	)
 
 	Begin
@@ -125,6 +127,7 @@ Function Invoke-SDPAPIEntity
 						Body = $Body
 						UseBasicParsing = $true
 					}
+					if($Host.Version -gt [Version]"7.2") { $RestPrams['SkipCertificateCheck'] = $Global:SkipCertificateCheck }
 					if($ContentType) { $RestPrams['ContentType'] = $ContentType }
 					$Result = Invoke-RestMethod @RestPrams
 					$Results += $Result
@@ -144,6 +147,7 @@ Function Invoke-SDPAPIEntity
 					Headers = $Headers
 					UseBasicParsing = $true
 				}
+				if($Host.Version -gt [Version]"7.2") { $RestPrams['SkipCertificateCheck'] = $Global:SkipCertificateCheck }
 				if($ContentType) { $RestPrams['ContentType'] = $ContentType }
 				$Result = Invoke-RestMethod @RestPrams
 				$Results = $Result.$EntityResult

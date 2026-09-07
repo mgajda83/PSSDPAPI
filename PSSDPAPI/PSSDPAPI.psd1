@@ -12,7 +12,7 @@
     RootModule = 'PSSDPAPI.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.0.2.5'
+    ModuleVersion = '1.0.2.7'
 
     # ID used to uniquely identify this module
     GUID = '48a0d8c8-9858-4289-ad71-58acc91e3868'
